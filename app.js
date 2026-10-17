@@ -311,11 +311,11 @@ async function submitProof(){if(!['drawing','finished'].includes(phase))return;
  const proof={id,submissionId,publication:'pending',human:state.identity,title,wallet,proof:id,score:metrics.score,votes:0,image,created:Date.now(),round,metrics,prompt:prompts[(round-1842)%prompts.length],free};
  state.freeUsed=true;state.history.push(proof);persist();updateLatestProof();
  $('analysis-value').textContent=metrics.score.toFixed(1);$('analysis-class').textContent=classification(metrics.score);$('analysis-id').textContent=id;
- phase='publishing';$('draw-feedback').textContent=ProofCommunity.isLocal?'Adding to your browser-local wall…':'Saved on this device. Adding to the shared wall…';
+ phase='publishing';$('draw-feedback').textContent=ProofCommunity.isLocal?'Adding to Database wall…':'Adding to the shared wall…';
  let published=false;
  try{await publishSharedProof(proof);published=true}catch(error){$('draw-feedback').textContent=error.message+' Open your proof to retry adding it to the wall.';toast('Drawing saved on this device. Open your proof to retry adding it to the wall.');}
- phase='submitted';$('canvas-status').textContent=published?(ProofCommunity.isLocal?'LOCAL PROOF ACCEPTED':'SHARED PROOF ACCEPTED'):'DRAWING SAVED ON THIS DEVICE';$('accepted-stamp').hidden=!published;
- if(published){$('draw-feedback').textContent=ProofCommunity.isLocal?'Proof accepted. Your drawing is saved on this device and added to your wall.':'Proof accepted. Everyone can see your drawing on the wall.';toast('Proof accepted. Open your proof to sign or download it.');}
+ phase='submitted';$('canvas-status').textContent=published?(ProofCommunity.isLocal?'PROOF ACCEPTED':'SHARED PROOF ACCEPTED'):'DRAWING SAVED ON THE DATABASE';$('accepted-stamp').hidden=!published;
+ if(published){$('draw-feedback').textContent=ProofCommunity.isLocal?'Proof accepted. Your drawing is saved on your profile and added to your wall.':'Proof accepted. Everyone can see your drawing on the wall.';toast('Proof accepted. Open your proof to sign or download it.');}
  $('submit-button').hidden=true;$('start-button').hidden=false;$('start-button').innerHTML='Make another proof <span>↗</span>';renderRound();renderWall();
 
 }
